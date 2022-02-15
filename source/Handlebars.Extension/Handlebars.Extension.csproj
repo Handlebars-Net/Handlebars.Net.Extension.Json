@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>HandlebarsDotNet.Extension.Json</AssemblyName>
     <ProjectGuid>25080858-B620-4985-8AEF-E135324081B3</ProjectGuid>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);net472</TargetFrameworks>
     <Version>1.0.0</Version>
     <RootNamespace>HandlebarsDotNet.Extension.Json</RootNamespace>

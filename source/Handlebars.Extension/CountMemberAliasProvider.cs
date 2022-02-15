@@ -4,7 +4,7 @@ using HandlebarsDotNet.PathStructure;
 
 namespace HandlebarsDotNet.Extension.Json
 {
-    public class CountMemberAliasProvider : IMemberAliasProvider<JsonElement>
+    public partial class CountMemberAliasProvider : IMemberAliasProvider<JsonElement>
     {
         public bool TryGetMemberByAlias(JsonElement instance, Type targetType, ChainSegment memberAlias, out object? value)
         {
@@ -22,11 +22,11 @@ namespace HandlebarsDotNet.Extension.Json
 
             value = instance.GetArrayLength();
             return true;
+        }
 
-            static bool EqualsIgnoreCase(string a, ChainSegment b)
-            {
-                return string.Equals(a, b.TrimmedValue, StringComparison.OrdinalIgnoreCase);
-            }
+        private static bool EqualsIgnoreCase(string a, ChainSegment b)
+        {
+            return string.Equals(a, b.TrimmedValue, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

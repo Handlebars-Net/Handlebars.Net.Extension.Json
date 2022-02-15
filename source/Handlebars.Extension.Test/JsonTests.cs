@@ -13,14 +13,19 @@ namespace HandlebarsDotNet.Extension.Test
 {
     public class JsonTests
     {
+        public delegate object JsonModelFactory(string json);
+
         public class EnvGenerator : IEnumerable<object[]>
         {
-            private readonly List<IHandlebars> _data = new List<IHandlebars>
+            private readonly List<(IHandlebars, JsonModelFactory)> _data = new List<(IHandlebars, JsonModelFactory)>
             {
-                Handlebars.Create(new HandlebarsConfiguration().UseJson())
+                (Handlebars.Create(new HandlebarsConfiguration().UseJson()), json => JsonDocument.Parse(json)),
+#if NET6_0_OR_GREATER
+                (Handlebars.Create(new HandlebarsConfiguration().UseJson()), json => System.Text.Json.Nodes.JsonNode.Parse(json)),
+#endif
             };
 
-            public IEnumerator<object[]> GetEnumerator() => _data.Select(o => new object[] { o }).GetEnumerator();
+            public IEnumerator<object[]> GetEnumerator() => _data.Select(item => new object[] { item.Item1, item.Item2 }).GetEnumerator();
 
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
@@ -51,9 +56,9 @@ namespace HandlebarsDotNet.Extension.Test
 
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-		public void JsonTestIfTruthy(IHandlebars handlebars)
+		public void JsonTestIfTruthy(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
 		{
-			var model = JsonDocument.Parse("{\"truthy\":true}");
+			var model = jsonModelFactory("{\"truthy\":true}");
 
 			var source = "{{#if truthy}}{{truthy}}{{/if}}";
             
@@ -66,9 +71,9 @@ namespace HandlebarsDotNet.Extension.Test
         
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-        public void JsonTestIfFalsy(IHandlebars handlebars)
+        public void JsonTestIfFalsy(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
         {
-            var model = JsonDocument.Parse("{\"falsy\":false}");
+            var model = jsonModelFactory("{\"falsy\":false}");
 
             var source = "{{#if (not falsy)}}{{falsy}}{{/if}}";
 
@@ -82,9 +87,9 @@ namespace HandlebarsDotNet.Extension.Test
 
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-		public void JsonTestIfFalsyMissingField(IHandlebars handlebars)
+		public void JsonTestIfFalsyMissingField(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
 		{
-			var model = JsonDocument.Parse("{\"myfield\":\"test1\"}");
+			var model = jsonModelFactory("{\"myfield\":\"test1\"}");
 
 			var source = "{{myfield}}{{#if mymissingfield}}{{mymissingfield}}{{/if}}";
 
@@ -97,9 +102,9 @@ namespace HandlebarsDotNet.Extension.Test
 
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-		public void JsonTestIfFalsyValue(IHandlebars handlebars)
+		public void JsonTestIfFalsyValue(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
 		{
-			var model = JsonDocument.Parse("{\"myfield\":\"test1\",\"falsy\":null}");
+			var model = jsonModelFactory("{\"myfield\":\"test1\",\"falsy\":null}");
 
 			var source = "{{myfield}}{{#if falsy}}{{falsy}}{{/if}}";
 
@@ -112,9 +117,9 @@ namespace HandlebarsDotNet.Extension.Test
 
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-        public void ArrayIterator(IHandlebars handlebars)
+        public void ArrayIterator(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
         {
-            var model = JsonDocument.Parse("[{\"Key\": \"Key1\", \"Value\": \"Val1\"},{\"Key\": \"Key2\", \"Value\": \"Val2\"}]");
+            var model = jsonModelFactory("[{\"Key\": \"Key1\", \"Value\": \"Val1\"},{\"Key\": \"Key2\", \"Value\": \"Val2\"}]");
 
             var source = "{{#each this}}{{Key}}{{Value}}{{/each}}";
 
@@ -127,9 +132,9 @@ namespace HandlebarsDotNet.Extension.Test
         
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-        public void ArrayIteratorProperties(IHandlebars handlebars)
+        public void ArrayIteratorProperties(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
         {
-            var model = JsonDocument.Parse("[{\"Key\": \"Key1\", \"Value\": \"Val1\"},{\"Key\": \"Key2\", \"Value\": \"Val2\"}]");
+            var model = jsonModelFactory("[{\"Key\": \"Key1\", \"Value\": \"Val1\"},{\"Key\": \"Key2\", \"Value\": \"Val2\"}]");
 
             var source = "{{#each this}}{{@index}}-{{@first}}-{{@last}}-{{@value.Key}}-{{@value.Value}};{{/each}}";
 
@@ -142,9 +147,9 @@ namespace HandlebarsDotNet.Extension.Test
 
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-        public void ArrayIndexProperties(IHandlebars handlebars)
+        public void ArrayIndexProperties(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
         {
-            var model = JsonDocument.Parse("[\"Index0\", \"Index1\"]");
+            var model = jsonModelFactory("[\"Index0\", \"Index1\"]");
 
             var source = "{{@root.1}}";
 
@@ -157,9 +162,9 @@ namespace HandlebarsDotNet.Extension.Test
 
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-        public void ArrayIndexPropertiesNested(IHandlebars handlebars)
+        public void ArrayIndexPropertiesNested(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
         {
-            var model = JsonDocument.Parse("[{}, {\"Items\": [\"Index0\", \"Index1\"]}]");
+            var model = jsonModelFactory("[{}, {\"Items\": [\"Index0\", \"Index1\"]}]");
 
             var source = "{{@root.1.Items.1}}";
 
@@ -172,9 +177,9 @@ namespace HandlebarsDotNet.Extension.Test
 
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-        public void ArrayCount(IHandlebars handlebars)
+        public void ArrayCount(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
         {
-	        var model = JsonDocument.Parse("[{\"Key\": \"Key1\", \"Value\": \"Val1\"},{\"Key\": \"Key2\", \"Value\": \"Val2\"}]");
+	        var model = jsonModelFactory("[{\"Key\": \"Key1\", \"Value\": \"Val1\"},{\"Key\": \"Key2\", \"Value\": \"Val2\"}]");
 
 	        var source = "{{this.Count}} = {{this.Length}}";
 
@@ -187,9 +192,9 @@ namespace HandlebarsDotNet.Extension.Test
         
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-        public void ArrayListProperties(IHandlebars handlebars)
+        public void ArrayListProperties(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
         {
-            var model = JsonDocument.Parse("[{\"Key\": \"Key1\", \"Value\": \"Val1\"},{\"Key\": \"Key2\", \"Value\": \"Val2\"}]");
+            var model = jsonModelFactory("[{\"Key\": \"Key1\", \"Value\": \"Val1\"},{\"Key\": \"Key2\", \"Value\": \"Val2\"}]");
 
             var source = "{{listProperties this}}";
 
@@ -203,8 +208,9 @@ namespace HandlebarsDotNet.Extension.Test
         
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-        public void ObjectIterator(IHandlebars handlebars){
-	        var model = JsonDocument.Parse("{\"Key1\": \"Val1\", \"Key2\": \"Val2\"}");
+        public void ObjectIterator(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
+        {
+	        var model = jsonModelFactory("{\"Key1\": \"Val1\", \"Key2\": \"Val2\"}");
 
 	        var source = "{{#each this}}{{@key}}{{@value}}{{/each}}";
 
@@ -217,8 +223,9 @@ namespace HandlebarsDotNet.Extension.Test
         
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-        public void ObjectIteratorProperties(IHandlebars handlebars){
-            var model = JsonDocument.Parse("{\"Key1\": \"Val1\", \"Key2\": \"Val2\"}");
+        public void ObjectIteratorProperties(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
+        {
+            var model = jsonModelFactory("{\"Key1\": \"Val1\", \"Key2\": \"Val2\"}");
 
             var source = "{{#each this}}{{@index}}-{{@first}}-{{@last}}-{{@key}}-{{@value}};{{/each}}";
 
@@ -231,8 +238,9 @@ namespace HandlebarsDotNet.Extension.Test
         
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-        public void ObjectListProperties(IHandlebars handlebars){
-            var model = JsonDocument.Parse("{\"Key1\": \"Val1\", \"Key2\": \"Val2\"}");
+        public void ObjectListProperties(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
+        {
+            var model = jsonModelFactory("{\"Key1\": \"Val1\", \"Key2\": \"Val2\"}");
 
             var source = "{{ListProperties this}}";
             handlebars.RegisterHelper(new ListPropertiesHelper());
@@ -246,8 +254,9 @@ namespace HandlebarsDotNet.Extension.Test
         
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-        public void ObjectIteratorPropertiesWithLast(IHandlebars handlebars){
-            var model = JsonDocument.Parse("{\"Key1\": \"Val1\", \"Key2\": \"Val2\"}");
+        public void ObjectIteratorPropertiesWithLast(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
+        {
+            var model = jsonModelFactory("{\"Key1\": \"Val1\", \"Key2\": \"Val2\"}");
 
             var source = "{{#each this}}{{@index}}-{{@first}}-{{@last}}-{{@key}}-{{@value}};{{/each}}";
 
@@ -261,7 +270,7 @@ namespace HandlebarsDotNet.Extension.Test
         
         [Theory]
         [ClassData(typeof(EnvGenerator))]
-        public void WithParentIndexJsonNet(IHandlebars handlebars)
+        public void WithParentIndexJsonNet(IHandlebars handlebars, JsonModelFactory jsonModelFactory)
         {
             var source = @"
                 {{#each level1}}
@@ -328,9 +337,9 @@ namespace HandlebarsDotNet.Extension.Test
                     }
             };
 
-            var json = JsonDocument.Parse(JsonSerializer.Serialize(data));
+            var model = jsonModelFactory(JsonSerializer.Serialize(data));
             
-            var result = template(json);
+            var result = template(model);
 
             const string expected = @"
                             id=0

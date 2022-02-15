@@ -7,7 +7,7 @@ using HandlebarsDotNet.Runtime;
 
 namespace HandlebarsDotNet.Extension.Json
 {
-    internal static class Utils
+    internal static partial class Utils
     {
         private static readonly string[] ArrayProperties = { "length" };
 

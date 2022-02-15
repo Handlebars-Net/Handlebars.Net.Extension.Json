@@ -10,6 +10,10 @@ namespace HandlebarsDotNet.Extension.Json
         private static readonly JsonDocumentObjectDescriptor JsonDocumentObjectDescriptor = new JsonDocumentObjectDescriptor();
         private static readonly JsonElementObjectDescriptor JsonElementObjectDescriptor = new JsonElementObjectDescriptor();
 
+#if NET6_0_OR_GREATER
+        private static readonly JsonNodeObjectDescriptor JsonNodeObjectDescriptor = new JsonNodeObjectDescriptor();
+#endif
+
         /// <summary>
         /// Adds <see cref="IObjectDescriptorProvider"/>s required to support <c>System.Text.Json</c>. 
         /// </summary>
@@ -21,7 +25,11 @@ namespace HandlebarsDotNet.Extension.Json
             
             providers.Add(JsonDocumentObjectDescriptor);
             providers.Add(JsonElementObjectDescriptor);
-            
+
+#if NET6_0_OR_GREATER
+            providers.Add(JsonNodeObjectDescriptor);
+#endif
+
             return configuration;
         }
     }
