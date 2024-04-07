@@ -9,6 +9,7 @@
     <RootNamespace>HandlebarsDotNet.Extension.Json</RootNamespace>
     <Nullable>enable</Nullable>
     <SignAssembly Condition="'$(ShouldSignAssembly)' == 'true'">true</SignAssembly>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='netstandard2.1'">
@@ -39,6 +40,10 @@
   
   <ItemGroup>
     <PackageReference Include="Handlebars.Net" Version="2.0.3" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   
 </Project>
