@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643868971750,
+  "lastUpdate": 1712530465864,
   "repoUrl": "https://github.com/Handlebars-Net/Handlebars.Net.Extension.Json",
   "entries": {
     "Benchmark.Net.Extension Benchmark": [
@@ -288,6 +288,54 @@ window.BENCHMARK_DATA = {
             "value": 294088.19025530136,
             "unit": "ns",
             "range": "± 740.0520465016269"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "zjklee@gmail.com",
+            "name": "Oleh Formaniuk",
+            "username": "oformaniuk"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "15d30bcb08ddcebb0e2ded208edeb8fa4557f6b7",
+          "message": "Merge pull request #13 from thompson-tomo/chore/UpdateJava\n\nUpdate java to resolve SonarCloud scanner issues",
+          "timestamp": "2024-04-07T15:52:26-07:00",
+          "tree_id": "67ab3c1a54dd7f03ecc9ba113588acb086d35419",
+          "url": "https://github.com/Handlebars-Net/Handlebars.Net.Extension.Json/commit/15d30bcb08ddcebb0e2ded208edeb8fa4557f6b7"
+        },
+        "date": 1712530465488,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "HandlebarsNet.Extension.Benchmark.Json.SystemTextJson(N: 2)",
+            "value": 20423.522486368816,
+            "unit": "ns",
+            "range": "± 50.60060398759064"
+          },
+          {
+            "name": "HandlebarsNet.Extension.Benchmark.Json.SystemTextJson(N: 5)",
+            "value": 153683.07345145088,
+            "unit": "ns",
+            "range": "± 199.44731233536547"
+          },
+          {
+            "name": "HandlebarsNet.Extension.Benchmark.Json.SystemTextJson(N: 10)",
+            "value": 956400.1121651785,
+            "unit": "ns",
+            "range": "± 1681.3079221219082"
+          },
+          {
+            "name": "HandlebarsNet.Extension.Benchmark.EndToEnd.Default(N: 5, DataType: \"json\")",
+            "value": 239980.82354266828,
+            "unit": "ns",
+            "range": "± 1270.346738999351"
           }
         ]
       }
