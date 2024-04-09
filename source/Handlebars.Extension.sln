@@ -1,19 +1,18 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E9AC0BCD-C060-4634-BBBB-636167C809B4}"
 	ProjectSection(SolutionItems) = preProject
-		..\README.md = ..\README.md
 		Directory.Build.props = Directory.Build.props
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handlebars.Extension", "Handlebars.Extension\Handlebars.Extension.csproj", "{9822C7B8-7E51-42BC-9A49-72A10491B202}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Handlebars.Extension", "Handlebars.Extension\Handlebars.Extension.csproj", "{25080858-B620-4985-8AEF-E135324081B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handlebars.Extension.Test", "Handlebars.Extension.Test\Handlebars.Extension.Test.csproj", "{6BA232A6-8C4D-4C7D-BD75-1844FE9774AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Handlebars.Extension.Test", "Handlebars.Extension.Test\Handlebars.Extension.Test.csproj", "{1956A22F-7B26-4747-8125-7EAC0B94665D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handlebars.Extension.Benchmark", "Handlebars.Extension.Benchmark\Handlebars.Extension.Benchmark.csproj", "{B335E9C5-7DD3-416D-89CC-8D48D89DB628}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Handlebars.Extension.Benchmark", "Handlebars.Extension.Benchmark\Handlebars.Extension.Benchmark.csproj", "{95ECC7A5-0A42-4DAF-A546-20522A3F3CF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,21 +20,24 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9822C7B8-7E51-42BC-9A49-72A10491B202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9822C7B8-7E51-42BC-9A49-72A10491B202}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9822C7B8-7E51-42BC-9A49-72A10491B202}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9822C7B8-7E51-42BC-9A49-72A10491B202}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BA232A6-8C4D-4C7D-BD75-1844FE9774AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BA232A6-8C4D-4C7D-BD75-1844FE9774AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BA232A6-8C4D-4C7D-BD75-1844FE9774AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BA232A6-8C4D-4C7D-BD75-1844FE9774AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B335E9C5-7DD3-416D-89CC-8D48D89DB628}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B335E9C5-7DD3-416D-89CC-8D48D89DB628}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B335E9C5-7DD3-416D-89CC-8D48D89DB628}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B335E9C5-7DD3-416D-89CC-8D48D89DB628}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25080858-B620-4985-8AEF-E135324081B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25080858-B620-4985-8AEF-E135324081B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25080858-B620-4985-8AEF-E135324081B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25080858-B620-4985-8AEF-E135324081B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1956A22F-7B26-4747-8125-7EAC0B94665D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1956A22F-7B26-4747-8125-7EAC0B94665D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1956A22F-7B26-4747-8125-7EAC0B94665D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1956A22F-7B26-4747-8125-7EAC0B94665D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95ECC7A5-0A42-4DAF-A546-20522A3F3CF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95ECC7A5-0A42-4DAF-A546-20522A3F3CF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95ECC7A5-0A42-4DAF-A546-20522A3F3CF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95ECC7A5-0A42-4DAF-A546-20522A3F3CF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A684E42D-246D-4CF7-B79C-34C49A10B35F}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
